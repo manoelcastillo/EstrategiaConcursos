@@ -2,7 +2,7 @@
 
 Link do enunciado do desafio: https://github.com/estrategiahq/desafio-desenvolvimento
 
-A solução apresentada foi elaborada em Go usando [Gorila Mux](https://github.com/gorilla/mux) para rotear os endpoints e o [MongoDB](https://www.mongodb.com/) como banco de dados de documentos e seguinto a metodologia TDD ([test-driven methodology](https://pt.wikipedia.org/wiki/Test-driven_development)). Foi pensada para ser fault tolerant e atuar como uma solução de backend.
+A solução apresentada foi elaborada em Go usando [Gorila Mux](https://github.com/gorilla/mux) para rotear os endpoints e o [MongoDB](https://www.mongodb.com/) como banco de dados de documentos e seguindo a metodologia TDD ([test-driven methodology](https://pt.wikipedia.org/wiki/Test-driven_development)). Foi pensada para ser fault tolerant e atuar como uma solução de backend.
 
 ### Objetivos
 * Aprender e ficar proficiente em Go
