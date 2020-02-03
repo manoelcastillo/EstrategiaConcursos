@@ -59,7 +59,8 @@ func (h *Handler) GetAllRepositories(w http.ResponseWriter, r *http.Request) {
 			RepoDao.InsertRepositories(gitHubUser, reposData)
 		}
 	}
-
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	err := json.NewEncoder(w).Encode(reposData)
 	if err != nil {
 		log.Println("[Error] ", err)
@@ -188,6 +189,8 @@ func (h *Handler) GetRepository(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(repo)
 }
 
@@ -204,6 +207,8 @@ func (h *Handler) GetRepositoryTags(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tags := RepoDao.GetRepositoryTags(gitHubUser, repoId)
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(tags)
 }
 
@@ -221,6 +226,7 @@ func (h *Handler) TagAdd(w http.ResponseWriter, r *http.Request) {
 	}
 	repository := RepoDao.AddTag(gitHubUser, repoId, t)
 	
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(202)
 	json.NewEncoder(w).Encode(repository)
 }
@@ -239,6 +245,8 @@ func (h *Handler) TagSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	repos := RepoDao.SearchByTag(gitHubUser, model.Tag {Name: t})
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(repos)
 }
 
@@ -256,6 +264,8 @@ func (h *Handler) TagAdvice(w http.ResponseWriter, r *http.Request) {
 
 	repo := RepoDao.GetRepository(gitHubUser, repoId)
 	possibleTags := GetPossibleTags(repo)
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(possibleTags)
 }
 
@@ -273,6 +283,8 @@ func (h *Handler) TagDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	repo := RepoDao.DeleteTag(gitHubUser, repoId, model.Tag {Name: t})
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(repo)
 }
 
@@ -298,7 +310,9 @@ func (h *Handler) TagUpdate(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(400) //bad request, tag not in repository
 		return
-	}	
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.writeHeader(200)
 	json.NewEncoder(w).Encode(repo)
 }
 
