@@ -11,7 +11,7 @@ A solução apresentada foi elaborada em Go usando [Gorila Mux](https://github.c
 * Cumprir os requisitos de avaliação técnica do processo seletivo
 
 ### Requisitos
-* Binários Go instralados e configurados. 
+* Binários Go instalados e configurados. 
     * Windows: [download](https://golang.org/dl/)
     * Linux: 
         ```console
