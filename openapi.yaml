@@ -1,0 +1,285 @@
+openapi: 3.0.0
+info:
+  title: "GitHub Repository Tag API"
+  version: "1.0.0"
+  contact:
+    name: Manoel Castillo
+    email: castillo.manoel@gmail.com
+tags:
+  - name: starred
+    description: starred repositories
+  - name: search
+    description: search repositories tagged
+  - name: tag
+    description: tags CRUD operations for a given repository
+paths:
+  /starred/{user}:
+    get:
+      summary: Get all user repositories
+      tags:
+        - starred
+      responses:
+        "200":
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+        "400":
+          description: must give a valid user
+    put:
+      summary: Refresh the repositories in the data base from a given user
+      tags:
+        - starred
+      responses:
+        "200":
+          description: update ok
+        "202":
+          description: accepted. No updates made
+        "400":
+          description: must give a valid user
+    parameters:
+      - name: user
+        in: path
+        description: Name of github user
+        required: true
+        schema:
+          type: string
+  /starred/{user}/{id}:
+    get:
+      summary: Get user specific repository
+      tags:
+        - starred
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Repository'
+        "400":
+          description: bad request, must give both user and repository id correctly
+        "204":
+          description: the repository not exist in user collection (MongoDB)
+    parameters:
+      - name: user
+        in: path
+        description: Name of github user
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Id of the user repository
+        required: true
+        schema:
+          type: integer
+  /search/{user}/{tag}:
+    get:
+      tags:
+        - search
+      summary: search a tag in all user repositories
+      responses:
+        "200":
+          description: ok
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Repository'
+        "400":
+          description: must give a valid user
+      parameters:
+      - name: user
+        in: path
+        description: Name of github user
+        required: true
+        schema:
+          type: string
+      - name: tag
+        in: path
+        description: tag to search
+        required: true
+        schema:
+          type: string
+  /tagadvisor/{user}/{id}:
+    get:
+      tags:
+        - tag
+      summary: Recommend a tag for a given repository
+      responses:
+        "200":
+          description: ok
+          content: 
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+        "400":
+          description: bad request, must give both user and repository id correctly
+    parameters:
+      - name: user
+        in: path
+        description: Name of github user
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Id of the user repository
+        required: true
+        schema:
+          type: integer
+  /tag/{user}/{id}:
+    get:
+      tags:
+        - tag
+      summary: retrieve the tag of a given repository
+      responses:
+        "200":
+          description: ok
+          content:
+            array:
+              schema:
+                items:
+                  type: string
+        "400":
+          description: bad request, must give both user and repository id correctly
+    post:
+      tags:
+        - tag
+      summary: add oone or more tags to the given repository
+      responses:
+        "202":
+          description: accepted
+          content:
+            'application/json':
+              schema:
+                type: object
+                items: 
+                  $ref: '#/components/schemas/Repository'
+        "400":
+          description: bad request, must give both user and repository id correctly
+    put:
+      tags:
+        - tag
+      summary: replace a given tag with another given tag
+      responses:
+        "200":
+          description: ok
+          content:
+            'application/json':
+              schema:
+                type: object
+                items: 
+                  $ref: '#/components/schemas/Repository'
+        "400": 
+          description: bad request, must give both user and repository id correctly
+        "404":
+          description: tag not found in repository
+      requestBody:
+        description: passing the tags to replace
+        content:
+          'application/json':
+            schema:
+              type: object
+              items:
+                $ref: '#/components/schemas/TagUpdate'
+    parameters:
+      - name: user
+        in: path
+        description: Name of github user
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Id of the user repository
+        required: true
+        schema:
+          type: integer
+  /tag/{user}/{id}/{tag}:
+    delete:
+      tags:
+        - tag
+      responses:
+        "200":
+          description: ok
+        "400":
+          description: bad request. Either the user, id or tag are empty or wrong formated
+      parameters:
+        - name: user
+          in: path
+          description: Name of github user
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: repository id
+          required: true
+          schema:
+            type: integer
+        - name: tag
+          in: path
+          description: the tag to be deleted
+          required: true
+          schema:
+            type: string
+components:
+  schemas:
+    Repository:
+      type: object
+      required:
+        - id
+        - user
+        - name
+        - url
+        - description
+        - language
+      properties:
+        id:
+          type: integer
+        user:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        description:
+          type: string
+        language: 
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+    Tag:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    TagUpdate:
+      type: object
+      required:
+        - oldtag
+        - newtag
+      properties:
+        oldtag:
+          type: object
+          properties:
+            name:
+              type: string
+        newtag:
+          type: object
+          properties:
+            name:
+              type: string
