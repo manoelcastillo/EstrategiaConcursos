@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"EstrategiaConcursos/dao"
-	"EstrategiaConcursos/model"
+	"GIT-Stars/dao"
+	"GIT-Stars/model"
 	"encoding/json"
 	"io/ioutil"
 	"log"
