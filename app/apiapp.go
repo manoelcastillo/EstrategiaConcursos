@@ -1,7 +1,7 @@
 package app
 
 import (
-	"EstrategiaConcursos/handler"
+	"GIT-Stars/handler"
 	"log"
 	"net/http"
 
