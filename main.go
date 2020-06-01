@@ -1,7 +1,7 @@
 package main
 
 import (
-	"EstrategiaConcursos/app"
+	"GIT-Stars/app"
 )
 
 func main() {
