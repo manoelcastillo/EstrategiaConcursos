@@ -1,6 +1,4 @@
-# Construindo uma API Rest para o desafio Estratégia Concursos
-
-Link do enunciado do desafio: https://github.com/estrategiahq/desafio-desenvolvimento
+# Construindo uma API Rest para consultar repositorios com Stars
 
 A solução apresentada foi elaborada em Go usando [Gorila Mux](https://github.com/gorilla/mux) para rotear os endpoints e o [MongoDB](https://www.mongodb.com/) como banco de dados de documentos e seguindo a metodologia TDD ([test-driven methodology](https://pt.wikipedia.org/wiki/Test-driven_development)). Foi pensada para ser fault tolerant e atuar como uma solução de backend.
 
@@ -8,7 +6,6 @@ A solução apresentada foi elaborada em Go usando [Gorila Mux](https://github.c
 * Aprender e ficar proficiente em Go
 * Estudo e uso de um banco de dados NoSQL
 * Aprender a suar MongoDB e Go implemnentando uma API Rest
-* Cumprir os requisitos de avaliação técnica do processo seletivo
 
 ### Requisitos
 * Binários Go instalados e configurados. 
@@ -53,14 +50,14 @@ O arquivo [openapi.yaml](openapi.yaml) pode ser validado com a ferramenta [Swagg
 Os Testes foram feitos apenas para as funções handler, que servem os requests dos endpoints. Os testes são simples, levando apenas em consideração os código de retorno http.
 
 ```console
-$ go test -timeout 30 EstrategiaConcursos/handler
+$ go test -timeout 30 GIT-Stars/handler
 ```
 
 ### Rodando o BackEnd
 Na pasta raiz do projeto:
 ```console
 $ go build
-$ ./EstrategiaConcursos
+$ ./GIT-Stars
 ```
 Para testar basta fazer as requests para os endpoints em http://localhost:8000 via brower/curl ou com a ferramenta **PostMan** 
 
