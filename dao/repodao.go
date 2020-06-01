@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"EstrategiaConcursos/model"
-	"EstrategiaConcursos/mongodb"
+	"GIT-Stars/model"
+	"GIT-Stars/mongodb"
 	"context"
 	"log"
 	"reflect"
